@@ -5,7 +5,7 @@
 local M = {}
 
 M.ui = {
-	theme = "darcula",
+  theme = "darcula",
 
   statusline = {
     separator_style = "round",
@@ -27,10 +27,10 @@ M.ui = {
     },
   }
 
-	-- hl_override = {
-	-- 	Comment = { italic = true },
-	-- 	["@comment"] = { italic = true },
-	-- },
+  -- hl_override = {
+  -- Comment = { italic = true },
+  -- ["@comment"] = { italic = true },
+  -- },
 }
 
 return M
