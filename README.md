@@ -60,6 +60,8 @@ Adviced font: `FiraCode Nerd Font`
 
 Solution: download tree-sitter release from here (https://github.com/tree-sitter/tree-sitter) and then add it to PATH
 
+Attention: swift tree-sitter plugin is too slow, so disable it by default.
+
 ## LSP
 
 ### sourcekit
