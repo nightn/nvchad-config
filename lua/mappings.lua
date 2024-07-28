@@ -7,4 +7,50 @@ local map = vim.keymap.set
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
+-- basic
+map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
+map("v", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
+
+-- buffer
+map("n", "H", "<cmd> bp <CR>", { desc = "Previous buffer" })
+map("n", "L", "<cmd> bn <CR>", { desc = "Next buffer" })
+
+-- window
+map("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = "window left"})
+map("t", "<C-l>", "<C-\\><C-n><C-w>l", { desc = "window right"})
+map("t", "<C-j>", "<C-\\><C-n><C-w>j", { desc = "window down"})
+map("t", "<C-k>", "<C-\\><C-n><C-w>k", { desc = "window up"})
+
+-- lsp
+map("n", "<leader>gt", "<cmd> Telescope lsp_definitions <CR>", { desc = "Goto definitions" })
+map("n", "<leader>fw", "<cmd> Telescope lsp_dynamic_workspace_symbols <CR>", { desc = "Find symbols in workspace" })
+map("n", "<leader>fg", "<cmd> Telescope live_grep <CR>", { desc = "Live grep" })
+map("n", "<leader>ld", "<cmd> Telescope diagnostics <CR>", { desc = "List diagnostics" })
+map("n", "<C-p>", "<cmd> Telescope keymaps <CR>", { desc = "Telescope keymaps"})
+
+map("n", "<leader>gr", function()
+  require('telescope.builtin').lsp_references()
+end, { desc = "Goto references" })
+
+map("n", "<leader>rn", function()
+  require("nvchad_ui.renamer").open()
+end, { desc = "LSP rename"})
+
+map("n", "<leader>fi", function()
+  vim.lsp.buf.code_action({ apply = true })
+end, { desc = "LSP fix current"})
+
+map("n", "<leader>nv", function()
+  require("nvim-navbuddy")
+  vim.cmd("Navbuddy")
+end, { desc = "Navbuddy"})
+
+-- git
+map("n", "<leader>hu", function()
+  require("gitsigns").reset_hunk()
+end, { desc = "Hunk undo"})
+
+map("n", "<leader>hp", function()
+  require("gitsigns").preview_hunk()
+end, { desc = "Hunk preview"})
+
