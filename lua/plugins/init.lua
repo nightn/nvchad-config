@@ -58,4 +58,36 @@ return {
       },
     },
   },
+
+  {
+    "hrsh7th/nvim-cmp",
+    opts = {
+      completion = {
+        completeopt = "menu,menuone,noinsert,noselect",  -- do not preselect the first one
+      },
+    }
+  },
+
+
+  {
+    "SmiteshP/nvim-navbuddy",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+      "MunifTanjim/nui.nvim"
+    },
+    opts = {
+      lsp = { auto_attach = true },
+      window = {
+        size = "90%",
+        sections = {
+          left = {
+            size = "15%",
+          },
+          mid = {
+            size = "25%"
+          },
+        }
+      }
+    }
+  },
 }
