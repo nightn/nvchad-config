@@ -52,3 +52,11 @@ Adviced font: `FiraCode Nerd Font`
 
 (6) Add lots of Mason and nvim-treesitter ensure-installed config.
 
+## LSP
+
+### sourcekit
+
+lspconfig.sourcekit will try to loop up `sourcekit-lsp` in PATH. see [here](https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/sourcekit.lua).
+
+you can install swift from here (https://www.swift.org/install) and add it to PATH.
+

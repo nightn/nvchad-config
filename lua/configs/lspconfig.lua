@@ -30,3 +30,14 @@ lspconfig.tsserver.setup {
   on_init = on_init,
   capabilities = capabilities,
 }
+
+-- sourcekit
+lspconfig.sourcekit.setup {
+  -- the default filetypes of sourcekit contains c/cpp, we should redefine it
+  -- see: https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/sourcekit.lua
+  filetypes = { 'swift', 'objective-c', 'objective-cpp' },
+  on_attach = on_attach,
+  on_init = on_init,
+  capabilities = capabilities,
+}
+
