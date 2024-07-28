@@ -55,6 +55,7 @@ return {
         "python",
         "cmake",
         "bash",
+        "swift",
       },
     },
   },

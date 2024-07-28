@@ -52,6 +52,14 @@ Adviced font: `FiraCode Nerd Font`
 
 (6) Add lots of Mason and nvim-treesitter ensure-installed config.
 
+## tree-sitter
+
+### swift
+
+`TSInstall swift` will throw error: tree-sitter CLI is needed because `swift` is marked that it needs to be generated from the grammar definitions to be compatible with nvim!
+
+Solution: download tree-sitter release from here (https://github.com/tree-sitter/tree-sitter) and then add it to PATH
+
 ## LSP
 
 ### sourcekit
