@@ -33,7 +33,7 @@ map("n", "<leader>gr", function()
 end, { desc = "Goto references" })
 
 map("n", "<leader>rn", function()
-  require("nvchad_ui.renamer").open()
+  require "nvchad.lsp.renamer"()
 end, { desc = "LSP rename"})
 
 map("n", "<leader>fi", function()
