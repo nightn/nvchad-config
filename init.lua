@@ -46,3 +46,36 @@ autocmd BufReadPost *
    \ endif
 ]])
 
+-- Other useful mappings
+vim.cmd([[
+" find all tailing whitespace
+nnoremap <leader>w /\v\s+$<CR>
+" delete all tailing whitespace
+nnoremap <leader>W :%s/\v\s+$//g \| noh<CR>
+
+" copy current file name (relative/absolute) to system clipboard (Linux version)
+if has("gui_gtk") || has("gui_gtk2") || has("gui_gnome") || has("unix")
+  " relative path (src/foo.txt)
+  nnoremap <leader>cf :let @+=expand("%")<CR>
+
+  " absolute path (/something/src/foo.txt)
+  nnoremap <leader>cF :let @+=expand("%:p")<CR>
+
+  " filename (foo.txt)
+  nnoremap <leader>ct :let @+=expand("%:t")<CR>
+
+  " directory name (/something/src)
+  nnoremap <leader>ch :let @+=expand("%:p:h")<CR>
+
+  " filename:linenumber (foo.txt:42)
+  nnoremap <leader>cg :let @+=expand("%:t") . ":" . line(".")<CR>
+endif
+
+
+" options for vim-translator
+let g:translator_default_engines = [ 'google' ]
+" Display translation in a window
+nnoremap <silent> <leader>ts <Plug>TranslateW
+vnoremap <silent> <leader>ts <Plug>TranslateWV
+]])
+

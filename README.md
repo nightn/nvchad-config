@@ -41,6 +41,14 @@ Adviced font: `FiraCode Nerd Font`
 
 - `[c`, `]c` : hunk navigation.
 
+- `<leader>cg` : copy "<filename>:<linenumber>", this is very useful when setting breakpoint in gdb.
+
+- `<leader>w`, `<leader>W` : find/delete all tailing whitespace.
+
+- `<leader>ts` : translation.
+
+- `<leader>a` : shows any treesitter or syntax highlight groups under the cursor.
+
 (1) support "<leader>nv".
 
 (2) nvim-cmp custom config: do not preselect the first one.
@@ -54,7 +62,17 @@ Adviced font: `FiraCode Nerd Font`
 
 (5) add new theme: darcula.
 
+- Fix highlight for `Search`.
+
 (6) Add lots of Mason and nvim-treesitter ensure-installed config.
+
+(7) add more plugins.
+
+- `voldikss/vim-translator` : translation plugin.
+
+- `google/vim-searchindex` : show complete count of searching matches.
+
+- `nvim-treesitter/playground` : for using cmd: TSHighlightCapturesUnderCursor.
 
 ## tree-sitter
 

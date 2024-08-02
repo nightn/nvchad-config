@@ -74,3 +74,6 @@ map("n", "[c", function()
   return "<Ignore>"
 end, { desc = "Jump to prev hunk" })
 
+-- syntax
+map("n", "<leader>a", "<cmd> TSHighlightCapturesUnderCursor <CR>", { desc = "TSHighlightCapturesUnderCursor (from nvim-treesitter/playground)" })
+

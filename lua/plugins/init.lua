@@ -90,4 +90,23 @@ return {
       }
     }
   },
+
+  -- plugin for translation
+  {
+    "voldikss/vim-translator",
+    lazy = false,
+  },
+
+  -- show complete count of searching matches, example: [1/42]
+  {
+    "google/vim-searchindex",
+    lazy = false,
+  },
+
+  -- for using cmd: TSHighlightCapturesUnderCursor
+  {
+    "nvim-treesitter/playground",
+    -- disable by default for performance reason. uncomment this line to enable cmd: TSHighlightCapturesUnderCursor
+    -- lazy = false,
+  },
 }

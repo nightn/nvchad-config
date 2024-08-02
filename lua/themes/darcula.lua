@@ -93,9 +93,12 @@ M.polish_hl = {
   ["@function"] = { fg = c_yellow },
   ["@function.call"] = { fg = c_yellow },
   ["method.call"] = { fg = c_yellow },
-  Search = {
-    bg = c_green,
-    fg = c_light_blue,
+  -- reference: ~/.local/share/nvim/lazy/base46/lua/base46/themes
+  defaults = {
+    Search = {
+      bg = c_green,
+      fg = c_light_blue,
+    },
   },
   Repeat = { fg = c_orange },
   ["@constructor"] = { fg = c_yellow },
