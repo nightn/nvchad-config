@@ -54,3 +54,23 @@ map("n", "<leader>hp", function()
   require("gitsigns").preview_hunk()
 end, { desc = "Hunk preview"})
 
+map("n", "]c", function()
+  if vim.wo.diff then
+    return "]c"
+  end
+  vim.schedule(function()
+    require("gitsigns").next_hunk()
+  end)
+  return "<Ignore>"
+end, { desc = "Jump to next hunk" })
+
+map("n", "[c", function()
+  if vim.wo.diff then
+    return "[c"
+  end
+  vim.schedule(function()
+    require("gitsigns").prev_hunk()
+  end)
+  return "<Ignore>"
+end, { desc = "Jump to prev hunk" })
+

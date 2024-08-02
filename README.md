@@ -37,6 +37,10 @@ Adviced font: `FiraCode Nerd Font`
 
 (0) add lots of mappings.
 
+- `<leader>rn` : lsp rename.
+
+- `[c`, `]c` : hunk navigation.
+
 (1) support "<leader>nv".
 
 (2) nvim-cmp custom config: do not preselect the first one.
