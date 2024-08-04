@@ -55,6 +55,8 @@ return {
         "python",
         "cmake",
         "bash",
+        "gn",
+        "make",
       },
     },
   },
