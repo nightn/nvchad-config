@@ -85,34 +85,36 @@ local c_green_yellow = "#BBB529"
 local c_comment_grey = "#808080"
 
 M.polish_hl = {
-  ["@variable"] = { fg = c_light_blue },
-  ["@constant.builtin"] = { fg = c_orange },
-  ["@type.builtin"] = { fg = c_orange },
-  ["@field"] = { fg = c_purple },
-  ["@property"] = { fg = c_purple },
-  ["@function"] = { fg = c_yellow },
-  ["@function.call"] = { fg = c_yellow },
-  ["method.call"] = { fg = c_yellow },
+  treesitter = {
+    ["@variable"] = { fg = c_light_blue },
+    ["@constant.builtin"] = { fg = c_orange },
+    ["@type.builtin"] = { fg = c_orange },
+    ["@field"] = { fg = c_purple },
+    ["@property"] = { fg = c_purple },
+    ["@function"] = { fg = c_yellow },
+    ["@function.call"] = { fg = c_yellow },
+    ["method.call"] = { fg = c_yellow },
+    ["@constructor"] = { fg = c_yellow },
+    ["@namespace"] = { fg = c_type_blue },
+    ["Boolean"] = { fg = c_purple, italic = true },
+    ["StorageClass"] = { fg = c_orange },
+    ["PreProc"] = { fg = c_green_yellow },
+    ["Define"] = { fg = c_green_yellow },
+    ["Include"] = { fg = c_green_yellow },
+    ["Macro"] = { fg = c_macro_green },
+    ["@function.macro"] = { fg = c_macro_green },
+    -- ["@constant"] = { fg = c_macro_green },
+    ["Comment"] = { fg = c_comment_grey },
+  },
   -- reference: ~/.local/share/nvim/lazy/base46/lua/base46/themes
   defaults = {
     Search = {
       bg = c_green,
       fg = c_light_blue,
     },
+    Repeat = { fg = c_orange },
+    Todo = { fg = c_green_yellow, bg = "#2B2B2B", italic = true },
   },
-  Repeat = { fg = c_orange },
-  ["@constructor"] = { fg = c_yellow },
-  ["@namespace"] = { fg = c_type_blue },
-  ["Boolean"] = { fg = c_purple, italic = true },
-  ["StorageClass"] = { fg = c_orange },
-  ["PreProc"] = { fg = c_green_yellow },
-  ["Define"] = { fg = c_green_yellow },
-  ["Include"] = { fg = c_green_yellow },
-  ["Macro"] = { fg = c_macro_green },
-  ["@function.macro"] = { fg = c_macro_green },
-  -- ["@constant"] = { fg = c_macro_green },
-  ["Comment"] = { fg = c_comment_grey },
-  Todo = { fg = c_green_yellow, bg = "#2B2B2B", italic = true },
 }
 
 M.type = "dark" -- light / dark
