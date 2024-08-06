@@ -74,6 +74,16 @@ Adviced font: `FiraCode Nerd Font`
 
 - `nvim-treesitter/playground` : for using cmd: TSHighlightCapturesUnderCursor.
 
+(8) Disable some mappings:
+
+- `<S-tab>` and `<tab>`. because `<S-tab>` conflicts with `<C-i>`.
+
+- `<leader>n`. There is no need config a mappings for `:nu`, and it affects the fluency of `<leader>nv` that is one of my most common used shortcut keys.
+
+## bugfix
+
+(1) `<S-tab>` conflicts with `<C-i>`, so disable it (as well as `<tab>`).
+
 ## tree-sitter
 
 ### swift

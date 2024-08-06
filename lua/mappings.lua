@@ -1,5 +1,14 @@
 require "nvchad.mappings"
 
+-- disable mappings
+
+local nomap = vim.keymap.del
+
+-- <S-tab> will affect the function of <C-i>, disable it
+nomap("n", "<S-tab>")
+nomap("n", "<tab>")
+nomap("n", "<leader>n")
+
 -- add yours here
 
 local map = vim.keymap.set
