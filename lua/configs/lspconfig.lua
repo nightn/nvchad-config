@@ -7,12 +7,15 @@ local capabilities = require("nvchad.configs.lspconfig").capabilities
 -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local lspconfig = require "lspconfig"
 local servers = {
+  -- <lsp server name>, <Mason plugin name>
   "html",
   "cssls",
   "bashls",  -- bash-language-server
   "cmake",  -- cmake-language-server
   "clangd",  -- clangd
   "jedi_language_server",  -- jedi-language-server
+  -- vue support. required: npm install -g @vue/language-server
+  "volar", -- vue-language-server
 }
 
 -- lsps with default config
