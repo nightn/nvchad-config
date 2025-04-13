@@ -83,3 +83,5 @@ if vim.fn.has("win32") == 1 then
   -- To fix the error: '"C:\Program Files\Git\usr\bin\bash.exe"' is not executable
   vim.opt.shell = "C:\\Program Files\\Git\\bin\\bash.exe"
 end
+
+require("configs.luasnip")
