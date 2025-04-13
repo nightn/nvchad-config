@@ -63,6 +63,9 @@ map("n", "<leader>hp", function()
   require("gitsigns").preview_hunk()
 end, { desc = "Hunk preview"})
 
+map("n", "<leader>gb", "<cmd> Git blame_line <CR>", { desc = "Git blame_line" })
+map("n", "<leader>gB", "<cmd> Git blame <CR>", { desc = "Git blame" })
+
 map("n", "]c", function()
   if vim.wo.diff then
     return "]c"
