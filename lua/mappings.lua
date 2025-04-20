@@ -37,6 +37,11 @@ map("n", "<leader>fg", "<cmd> Telescope live_grep <CR>", { desc = "Live grep" })
 map("n", "<leader>ld", "<cmd> Telescope diagnostics <CR>", { desc = "List diagnostics" })
 map("n", "<C-p>", "<cmd> Telescope keymaps <CR>", { desc = "Telescope keymaps"})
 
+-- Support format in virtual mode
+map("v", "<leader>fm", function()
+  require("conform").format({ lsp_fallback = true })
+end, { desc = "general format file" })
+
 map("n", "<leader>gr", function()
   require('telescope.builtin').lsp_references()
 end, { desc = "Goto references" })
