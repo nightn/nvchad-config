@@ -1,8 +1,12 @@
 local options = {
   formatters_by_ft = {
     lua = { "stylua" },
+    javascript = { "prettierd", "prettier", stop_after_first = true },
+    cpp = { "clang-format" },
+    c = { "clang-format" },
+    python = { "isort", "black" },
+    html = { "prettierd", "prettier" },
     -- css = { "prettier" },
-    -- html = { "prettier" },
   },
 
   -- For customize formatters, see:
