@@ -40,6 +40,8 @@ map("n", "<C-p>", "<cmd> Telescope keymaps <CR>", { desc = "Telescope keymaps" }
 -- Support format in virtual mode
 map("v", "<leader>fm", function()
   require("conform").format({ lsp_fallback = true })
+  -- Leave visual mode after range format
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true)
 end, { desc = "general format file" })
 
 map("n", "<leader>gr", function()
