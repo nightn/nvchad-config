@@ -59,6 +59,12 @@ map("n", "<leader>nv", function()
   vim.cmd("Navbuddy")
 end, { desc = "Navbuddy"})
 
+-- terminal
+-- [Attention] <C-`> does not work in tabby or windows terminal
+map({ "n", "t" }, "<C-`>", function()
+  require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
+end, { desc = "terminal toggleable horizontal term" })
+
 -- git
 map("n", "<leader>hu", function()
   require("gitsigns").reset_hunk()
