@@ -4,7 +4,7 @@
 local M = {}
 
 M.base_30 = {
-   -- 30 colors based on base_16
+  -- 30 colors based on base_16
   white = "#d3dbe3",
   darker_black = "#1F2428",
   black = "#24292E", --  nvim bg
@@ -122,4 +122,3 @@ M.type = "dark" -- light / dark
 M = require("base46").override_theme(M, "darcula")
 
 return M
-

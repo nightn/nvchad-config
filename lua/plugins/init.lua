@@ -3,7 +3,7 @@ return {
     "stevearc/conform.nvim",
     -- event = 'BufWritePre', -- uncomment for format on save
     config = function()
-      require "configs.conform"
+      require("configs.conform")
     end,
   },
 
@@ -12,7 +12,7 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       require("nvchad.configs.lspconfig").defaults()
-      require "configs.lspconfig"
+      require("configs.lspconfig")
       require("configs.luasnip")
     end,
   },
@@ -66,17 +66,16 @@ return {
     "hrsh7th/nvim-cmp",
     opts = {
       completion = {
-        completeopt = "menu,menuone,noinsert,noselect",  -- do not preselect the first one
+        completeopt = "menu,menuone,noinsert,noselect", -- do not preselect the first one
       },
-    }
+    },
   },
-
 
   {
     "SmiteshP/nvim-navbuddy",
     dependencies = {
       "SmiteshP/nvim-navic",
-      "MunifTanjim/nui.nvim"
+      "MunifTanjim/nui.nvim",
     },
     opts = {
       lsp = { auto_attach = true },
@@ -87,11 +86,11 @@ return {
             size = "15%",
           },
           mid = {
-            size = "25%"
+            size = "25%",
           },
-        }
-      }
-    }
+        },
+      },
+    },
   },
 
   -- plugin for translation

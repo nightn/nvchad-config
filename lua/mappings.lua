@@ -1,4 +1,4 @@
-require "nvchad.mappings"
+require("nvchad.mappings")
 
 -- disable mappings
 
@@ -25,17 +25,17 @@ map("n", "H", "<cmd> bp <CR>", { desc = "Previous buffer" })
 map("n", "L", "<cmd> bn <CR>", { desc = "Next buffer" })
 
 -- window
-map("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = "window left"})
-map("t", "<C-l>", "<C-\\><C-n><C-w>l", { desc = "window right"})
-map("t", "<C-j>", "<C-\\><C-n><C-w>j", { desc = "window down"})
-map("t", "<C-k>", "<C-\\><C-n><C-w>k", { desc = "window up"})
+map("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = "window left" })
+map("t", "<C-l>", "<C-\\><C-n><C-w>l", { desc = "window right" })
+map("t", "<C-j>", "<C-\\><C-n><C-w>j", { desc = "window down" })
+map("t", "<C-k>", "<C-\\><C-n><C-w>k", { desc = "window up" })
 
 -- lsp
 map("n", "<leader>gt", "<cmd> Telescope lsp_definitions <CR>", { desc = "Goto definitions" })
 map("n", "<leader>fw", "<cmd> Telescope lsp_dynamic_workspace_symbols <CR>", { desc = "Find symbols in workspace" })
 map("n", "<leader>fg", "<cmd> Telescope live_grep <CR>", { desc = "Live grep" })
 map("n", "<leader>ld", "<cmd> Telescope diagnostics <CR>", { desc = "List diagnostics" })
-map("n", "<C-p>", "<cmd> Telescope keymaps <CR>", { desc = "Telescope keymaps"})
+map("n", "<C-p>", "<cmd> Telescope keymaps <CR>", { desc = "Telescope keymaps" })
 
 -- Support format in virtual mode
 map("v", "<leader>fm", function()
@@ -43,36 +43,36 @@ map("v", "<leader>fm", function()
 end, { desc = "general format file" })
 
 map("n", "<leader>gr", function()
-  require('telescope.builtin').lsp_references()
+  require("telescope.builtin").lsp_references()
 end, { desc = "Goto references" })
 
 map("n", "<leader>rn", function()
-  require "nvchad.lsp.renamer"()
-end, { desc = "LSP rename"})
+  require("nvchad.lsp.renamer")()
+end, { desc = "LSP rename" })
 
 map("n", "<leader>fi", function()
   vim.lsp.buf.code_action({ apply = true })
-end, { desc = "LSP fix current"})
+end, { desc = "LSP fix current" })
 
 map("n", "<leader>nv", function()
   require("nvim-navbuddy")
   vim.cmd("Navbuddy")
-end, { desc = "Navbuddy"})
+end, { desc = "Navbuddy" })
 
 -- terminal
 -- [Attention] <C-`> does not work in tabby or windows terminal
 map({ "n", "t" }, "<C-`>", function()
-  require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
+  require("nvchad.term").toggle({ pos = "sp", id = "htoggleTerm" })
 end, { desc = "terminal toggleable horizontal term" })
 
 -- git
 map("n", "<leader>hu", function()
   require("gitsigns").reset_hunk()
-end, { desc = "Hunk undo"})
+end, { desc = "Hunk undo" })
 
 map("n", "<leader>hp", function()
   require("gitsigns").preview_hunk()
-end, { desc = "Hunk preview"})
+end, { desc = "Hunk preview" })
 
 map("n", "<leader>gb", "<cmd> Git blame_line <CR>", { desc = "Git blame_line" })
 map("n", "<leader>gB", "<cmd> Git blame <CR>", { desc = "Git blame" })
@@ -98,5 +98,9 @@ map("n", "[c", function()
 end, { desc = "Jump to prev hunk" })
 
 -- syntax
-map("n", "<leader>a", "<cmd> TSHighlightCapturesUnderCursor <CR>", { desc = "TSHighlightCapturesUnderCursor (from nvim-treesitter/playground)" })
-
+map(
+  "n",
+  "<leader>a",
+  "<cmd> TSHighlightCapturesUnderCursor <CR>",
+  { desc = "TSHighlightCapturesUnderCursor (from nvim-treesitter/playground)" }
+)
