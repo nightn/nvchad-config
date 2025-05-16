@@ -15,6 +15,12 @@ local options = {
     stylua = {
       prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" },
     },
+    prettierd = {
+      prepend_args = { "--single-quote", "--jsx-single-quote" }, -- force to use single quote
+    },
+    prettier = {
+      prepend_args = { "--single-quote", "--jsx-single-quote" }, -- force to use single quote
+    },
   },
 
   -- format_on_save = {
