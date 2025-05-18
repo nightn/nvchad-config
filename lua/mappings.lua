@@ -25,10 +25,32 @@ map("n", "H", "<cmd> bp <CR>", { desc = "Previous buffer" })
 map("n", "L", "<cmd> bn <CR>", { desc = "Next buffer" })
 
 -- window
-map("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = "window left" })
-map("t", "<C-l>", "<C-\\><C-n><C-w>l", { desc = "window right" })
-map("t", "<C-j>", "<C-\\><C-n><C-w>j", { desc = "window down" })
-map("t", "<C-k>", "<C-\\><C-n><C-w>k", { desc = "window up" })
+local function nt2t()
+  -- switch 'nt' mode to 't' mode
+  if vim.api.nvim_get_mode().mode == "nt" then
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-n>i", true, true, true), "t", true)
+  end
+end
+
+map({ "n", "t" }, "<C-h>", function()
+  vim.api.nvim_command("wincmd h")
+  nt2t()
+end, { desc = "switch window left" })
+
+map({ "n", "t" }, "<C-l>", function()
+  vim.api.nvim_command("wincmd l")
+  nt2t()
+end, { desc = "switch window right" })
+
+map({ "n", "t" }, "<C-j>", function()
+  vim.api.nvim_command("wincmd j")
+  nt2t()
+end, { desc = "switch window down" })
+
+map({ "n", "t" }, "<C-k>", function()
+  vim.api.nvim_command("wincmd k")
+  nt2t()
+end, { desc = "switch window up" })
 
 -- lsp
 map("n", "<leader>gt", "<cmd> Telescope lsp_definitions <CR>", { desc = "Goto definitions" })
@@ -36,6 +58,9 @@ map("n", "<leader>fw", "<cmd> Telescope lsp_dynamic_workspace_symbols <CR>", { d
 map("n", "<leader>fg", "<cmd> Telescope live_grep <CR>", { desc = "Live grep" })
 map("n", "<leader>ld", "<cmd> Telescope diagnostics <CR>", { desc = "List diagnostics" })
 map("n", "<C-p>", "<cmd> Telescope keymaps <CR>", { desc = "Telescope keymaps" })
+map("n", "<leader>k", function()
+  vim.diagnostic.open_float()
+end, { desc = "Open diagnostic float" })
 
 -- Support format in virtual mode
 map("v", "<leader>fm", function()
@@ -64,6 +89,17 @@ end, { desc = "Navbuddy" })
 -- terminal
 -- [Attention] <C-`> does not work in tabby or windows terminal
 map({ "n", "t" }, "<C-`>", function()
+  require("nvchad.term").toggle({ pos = "sp", id = "htoggleTerm" })
+end, { desc = "terminal toggleable horizontal term" })
+
+-- toggleable
+nomap({ "n", "t" }, "<A-v>")
+map({ "n", "t" }, "<A-l>", function()
+  require("nvchad.term").toggle({ pos = "vsp", id = "vtoggleTerm" })
+end, { desc = "terminal toggleable vertical term" })
+
+nomap({ "n", "t" }, "<A-h>")
+map({ "n", "t" }, "<A-j>", function()
   require("nvchad.term").toggle({ pos = "sp", id = "htoggleTerm" })
 end, { desc = "terminal toggleable horizontal term" })
 
