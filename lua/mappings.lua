@@ -144,6 +144,4 @@ map(
 )
 
 -- Github Copilot
--- Use <C-j> to accept copilot suggestion
-vim.api.nvim_set_keymap("i", "<C-j>", 'copilot#Accept("<CR>")', { silent = true, expr = true, noremap = true })
-
+map("n", "<leader>cc", "<cmd> CopilotChatToggle <CR>", { desc = "Toggle copilot chat" })

@@ -86,6 +86,3 @@ end
 
 -- To enable local config file: .nvimrc and .exrc
 vim.opt.exrc = true
-
--- Github Copilot config
-vim.g.copilot_no_tab_map = true
