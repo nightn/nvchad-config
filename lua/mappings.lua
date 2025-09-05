@@ -142,3 +142,8 @@ map(
   "<cmd> TSHighlightCapturesUnderCursor <CR>",
   { desc = "TSHighlightCapturesUnderCursor (from nvim-treesitter/playground)" }
 )
+
+-- Github Copilot
+-- Use <C-j> to accept copilot suggestion
+vim.api.nvim_set_keymap("i", "<C-j>", 'copilot#Accept("<CR>")', { silent = true, expr = true, noremap = true })
+

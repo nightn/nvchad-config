@@ -111,4 +111,10 @@ return {
     -- disable by default for performance reason. uncomment this line to enable cmd: TSHighlightCapturesUnderCursor
     -- lazy = false,
   },
+
+  -- github copilot
+  {
+    "github/copilot.vim",
+    event = "InsertEnter",
+  },
 }
