@@ -135,6 +135,30 @@ map("n", "[c", function()
   return "<Ignore>"
 end, { desc = "Jump to prev hunk" })
 
+-- copy relative path
+map("n", "<leader>cj", function()
+  local current_file = vim.fn.expand("%:p")
+  local current_dir = vim.fn.getcwd()
+
+  -- 确保路径以 / 结尾以便正确匹配
+  if not current_dir:match("/$") then
+    current_dir = current_dir .. "/"
+  end
+
+  -- 计算相对路径
+  local relative_path = current_file:gsub("^" .. vim.pesc(current_dir), "")
+
+  -- 复制到系统剪贴板
+  if vim.fn.has("clipboard") == 1 then
+    vim.fn.setreg("+", relative_path)
+    vim.notify("已复制相对路径: " .. relative_path, vim.log.levels.INFO)
+  else
+    -- 如果没有剪贴板支持，复制到 vim 寄存器
+    vim.fn.setreg('"', relative_path)
+    vim.notify("已复制相对路径到 vim 寄存器: " .. relative_path, vim.log.levels.WARN)
+  end
+end, { desc = "Copy relative path to clipboard" })
+
 -- syntax
 map(
   "n",
