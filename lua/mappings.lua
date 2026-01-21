@@ -162,7 +162,7 @@ end, { desc = "Copy relative path to clipboard" })
 -- syntax
 map(
   "n",
-  "<leader>a",
+  "<leader>sy",
   "<cmd> TSHighlightCapturesUnderCursor <CR>",
   { desc = "TSHighlightCapturesUnderCursor (from nvim-treesitter/playground)" }
 )

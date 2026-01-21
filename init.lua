@@ -53,6 +53,10 @@ nnoremap <leader>w /\v\s+$<CR>
 " delete all tailing whitespace
 nnoremap <leader>W :%s/\v\s+$//g \| noh<CR>
 
+autocmd BufRead,BufNewFile *.def set filetype=cpp
+autocmd BufRead,BufNewFile *.inc set filetype=cpp
+autocmd BufRead,BufNewFile *.bt set filetype=c
+
 " copy current file name (relative/absolute) to system clipboard (Linux version)
 if has("gui_gtk") || has("gui_gtk2") || has("gui_gnome") || has("unix")
   " relative path (src/foo.txt)
