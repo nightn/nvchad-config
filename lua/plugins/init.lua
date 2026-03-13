@@ -35,6 +35,7 @@ return {
         "jedi-language-server", -- python
         "clang-format",
         "gn-language-server", -- gn build system
+        "codelldb",           -- C/C++ debug adapter (used by nvim-dap)
       },
     },
   },
