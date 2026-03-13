@@ -110,6 +110,11 @@ Configured in `lua/plugins/dap.lua` and `lua/configs/dap.lua`. Loads on `event =
 - *Launch* — prompts for executable path and CLI args
 - *Attach* — fuzzy-picks a running process by PID
 
+**Languages supported:**
+- **C/C++** — codelldb (regular), cpptools/GDB (rr reverse debugging)
+- **JavaScript/TypeScript** — vscode-js-debug (`pwa-node` for Node, `pwa-chrome` for browser)
+- **Bash** — bash-debug-adapter (wraps bashdb)
+
 **Key bindings:**
 
 | Key | Action |
@@ -127,7 +132,17 @@ Configured in `lua/plugins/dap.lua` and `lua/configs/dap.lua`. Loads on `event =
 | `<F10>` / `<leader>dn` | Step over |
 | `<F11>` / `<leader>di` | Step into |
 | `<F12>` / `<leader>do` | Step out |
+| `<leader>rr` | Start rr reverse-debug session |
+| `<leader>rc` | rr reverse-continue |
+| `<leader>rs` | rr reverse-step (into) |
+| `<leader>rN` | rr reverse-next (over) |
 | `<leader>dq` | Terminate session |
 
 **UI** auto-opens on session start and auto-closes on termination. `<leader>du` is a manual override.
+
+**rr protocol notes** (hard-won, do not change without testing):
+- `set non-stop off` + `maintenance set target-non-stop off` MUST be passed via GDB `--iex` flags (before DAP starts), NOT via `initCommands` — `initCommands` is a cpptools extension that GDB's native DAP ignores entirely.
+- For GDB 14+ backend, use DAP `request = "attach"` with a `target` field (→ GDB runs `target remote <target>`). Using `request = "launch"` runs GDB's `run` command which is wrong for remote targets.
+- Reverse commands (`reverse-continue`, `reverse-next`, `reverse-step`) are sent via DAP `evaluate` with `context = "repl"` because GDB 14–17's DAP layer does not implement the `reverseContinue`/`stepBack` DAP requests — but the GDB console commands work reliably through rr.
+- The `gdb_rr` adapter type is used (not `gdb`) to allow targeted capability patching in the `event_initialized` listener.
 

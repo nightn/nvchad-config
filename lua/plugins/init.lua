@@ -36,6 +36,9 @@ return {
         "clang-format",
         "gn-language-server", -- gn build system
         "codelldb",           -- C/C++ debug adapter (used by nvim-dap)
+        "cpptools",           -- Microsoft OpenDebugAD7: GDB adapter for rr reverse debugging
+        "js-debug-adapter",   -- JavaScript/TypeScript debug adapter (vscode-js-debug)
+        "bash-debug-adapter", -- Bash debug adapter (requires bashdb)
       },
     },
   },

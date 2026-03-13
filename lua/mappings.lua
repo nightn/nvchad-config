@@ -248,3 +248,50 @@ end, { desc = "DAP list breakpoints (Telescope)" })
 map("n", "<leader>dp", function()
   require("telescope").extensions.dap.commands()
 end, { desc = "DAP commands (Telescope)" })
+
+-- ──────────────────────────────────────────────────────────────────────────────
+-- rr reverse debugging (C/C++ only; requires an rr recording)
+-- ──────────────────────────────────────────────────────────────────────────────
+
+-- Start rr replay and connect GDB via cppdbg (prompts for executable path)
+map("n", "<leader>rr", function()
+  require("configs.dap").start_rr_debug()
+end, { desc = "rr start reverse-debug session" })
+
+-- Send a GDB console command through DAP evaluate (context="repl").
+-- This is more reliable than dap.reverse_continue() / dap.step_back() because:
+--   • GDB's DAP layer does NOT implement reverseContinue / stepBack requests
+--     (confirmed in GDB 14–17: the requests are simply not routed to rr).
+--   • evaluate context="repl" IS routed to the GDB console, where
+--     reverse-continue / reverse-step / reverse-next are native GDB commands
+--     provided by rr.
+-- After the command is accepted, GDB emits a DAP `stopped` event when
+-- execution halts (e.g. at a breakpoint or start-of-recording), so the
+-- nvim-dap UI updates automatically.
+local function gdb_console(cmd)
+  local session = require("dap").session()
+  if not session then
+    vim.notify("No active DAP session", vim.log.levels.WARN)
+    return
+  end
+  session:request("evaluate", {
+    expression = cmd,
+    context    = "repl",
+  }, function(err)
+    if err then
+      vim.notify(
+        string.format("rr: '%s' failed — %s", cmd, err.message or vim.inspect(err)),
+        vim.log.levels.ERROR
+      )
+    end
+  end)
+end
+
+-- Run backwards until the previous breakpoint (mirrors <F5> / <leader>dc)
+map("n", "<leader>rc", function() gdb_console("reverse-continue") end, { desc = "rr reverse-continue" })
+
+-- Step backwards one line, stepping INTO function calls (mirrors <F11>)
+map("n", "<leader>rs", function() gdb_console("reverse-step") end, { desc = "rr reverse-step" })
+
+-- Step backwards one line, stepping OVER function calls (mirrors <F10>)
+map("n", "<leader>rN", function() gdb_console("reverse-next") end, { desc = "rr reverse-next" })
