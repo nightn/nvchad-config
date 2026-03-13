@@ -143,6 +143,12 @@ Configured in `lua/plugins/dap.lua` and `lua/configs/dap.lua`. Loads on `event =
 **rr protocol notes** (hard-won, do not change without testing):
 - `set non-stop off` + `maintenance set target-non-stop off` MUST be passed via GDB `--iex` flags (before DAP starts), NOT via `initCommands` — `initCommands` is a cpptools extension that GDB's native DAP ignores entirely.
 - For GDB 14+ backend, use DAP `request = "attach"` with a `target` field (→ GDB runs `target remote <target>`). Using `request = "launch"` runs GDB's `run` command which is wrong for remote targets.
-- Reverse commands (`reverse-continue`, `reverse-next`, `reverse-step`) are sent via DAP `evaluate` with `context = "repl"` because GDB 14–17's DAP layer does not implement the `reverseContinue`/`stepBack` DAP requests — but the GDB console commands work reliably through rr.
+- For `gdb_rr` sessions: reverse commands are sent via DAP `evaluate` with `context = "repl"` because GDB 14–17's native DAP does NOT implement the `reverseContinue`/`stepBack` DAP requests — the GDB console commands work via rr instead.
+- For `cppdbg` (cpptools) sessions: use `dap.reverse_continue()` / `dap.step_back()` which cpptools maps to GDB MI `-exec-reverse-continue` / `-exec-reverse-step`. Do NOT use `evaluate context=repl` for cpptools — it tries to evaluate as an expression in the current frame and fails.
 - The `gdb_rr` adapter type is used (not `gdb`) to allow targeted capability patching in the `event_initialized` listener.
+- After `target remote`, rr stops at the very first instruction in `ld.so` (no source). A one-shot `event_stopped` listener auto-continues past this initial attach stop to the user's first breakpoint.
+
+**Bash DAP notes:**
+- The correct field is `pathBashdbLib` (not `bashdbLibLocation`).
+- Use `terminalKind = "debugConsole"` for internal spawn. `"integrated"` sends a `runInTerminal` DAP request which nvim-dap does not handle, causing the session to hang.
 

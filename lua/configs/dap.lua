@@ -282,7 +282,11 @@ dap.configurations.sh = {
     name              = "Launch bash script",
     showDebugOutput   = true,
     pathBashdb        = bash_debug_path .. "/extension/bashdb_dir/bashdb",
-    bashdbLibLocation = bash_debug_path .. "/extension/bashdb_dir",
+    -- Correct field names as per bash-debug-adapter spec:
+    --   pathBashdbLib (not bashdbLibLocation)
+    -- terminalKind = "debugConsole" uses internal spawn; "integrated" would
+    -- send a runInTerminal DAP request which nvim-dap does not handle.
+    pathBashdbLib     = bash_debug_path .. "/extension/bashdb_dir",
     trace             = true,
     file              = "${file}",
     program           = "${file}",
@@ -292,8 +296,9 @@ dap.configurations.sh = {
     pathMkfifo        = "mkfifo",
     pathPkill         = "pkill",
     args              = {},
+    argsString        = "",
     env               = {},
-    terminalKind      = "integrated",
+    terminalKind      = "debugConsole",
   },
 }
 
@@ -314,6 +319,30 @@ dap.listeners.after.event_initialized["rr_reverse_caps"] = function(session)
   if session.config and session.config.type == "gdb_rr" then
     session.capabilities.supportsReverseContinue = true
     session.capabilities.supportsStepBack        = true
+  end
+end
+
+-- Auto-continue past the initial attach stop in rr sessions.
+-- When GDB connects via `target remote`, rr positions at the very first
+-- instruction of the replay which is inside ld.so (the dynamic linker) — a
+-- frame with no source. nvim-dap would show a "Source missing" warning.
+-- This one-shot listener fires on the first stopped event for gdb_rr sessions
+-- and immediately continues to the user's first breakpoint.
+dap.listeners.after.event_initialized["rr_skip_initial_stop_setup"] = function(session)
+  if not session.config or session.config.type ~= "gdb_rr" then return end
+
+  local key = "rr_skip_initial_stop_" .. tostring(session.id or math.random())
+  dap.listeners.after.event_stopped[key] = function(s, body)
+    if s ~= session then return end
+    -- Deregister immediately — this listener is one-shot
+    dap.listeners.after.event_stopped[key] = nil
+    if body and body.reason == "attach" then
+      vim.schedule(function()
+        if dap.session() == session then
+          dap.continue()
+        end
+      end)
+    end
   end
 end
 

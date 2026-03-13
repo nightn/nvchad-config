@@ -259,15 +259,9 @@ map("n", "<leader>rr", function()
 end, { desc = "rr start reverse-debug session" })
 
 -- Send a GDB console command through DAP evaluate (context="repl").
--- This is more reliable than dap.reverse_continue() / dap.step_back() because:
---   • GDB's DAP layer does NOT implement reverseContinue / stepBack requests
---     (confirmed in GDB 14–17: the requests are simply not routed to rr).
---   • evaluate context="repl" IS routed to the GDB console, where
---     reverse-continue / reverse-step / reverse-next are native GDB commands
---     provided by rr.
--- After the command is accepted, GDB emits a DAP `stopped` event when
--- execution halts (e.g. at a breakpoint or start-of-recording), so the
--- nvim-dap UI updates automatically.
+-- Used for the gdb_rr backend: GDB 14–17 native DAP does NOT implement the
+-- reverseContinue / stepBack DAP requests; instead they must be issued as
+-- raw GDB console commands via evaluate context="repl".
 local function gdb_console(cmd)
   local session = require("dap").session()
   if not session then
@@ -287,11 +281,35 @@ local function gdb_console(cmd)
   end)
 end
 
+-- Dispatch a reverse command to the correct backend.
+--   gdb_rr  (GDB 14+ native DAP): route via GDB console evaluate
+--   cppdbg  (cpptools): GDB MI implements reverseContinue / stepBack natively;
+--             use standard DAP requests (dap.reverse_continue / dap.step_back)
+local function reverse_cmd(console_cmd, dap_fn)
+  local session = require("dap").session()
+  if not session then
+    vim.notify("No active DAP session", vim.log.levels.WARN)
+    return
+  end
+  if session.config.type == "cppdbg" then
+    dap_fn()
+  else
+    gdb_console(console_cmd)
+  end
+end
+
 -- Run backwards until the previous breakpoint (mirrors <F5> / <leader>dc)
-map("n", "<leader>rc", function() gdb_console("reverse-continue") end, { desc = "rr reverse-continue" })
+map("n", "<leader>rc", function()
+  reverse_cmd("reverse-continue", function() require("dap").reverse_continue() end)
+end, { desc = "rr reverse-continue" })
 
 -- Step backwards one line, stepping INTO function calls (mirrors <F11>)
-map("n", "<leader>rs", function() gdb_console("reverse-step") end, { desc = "rr reverse-step" })
+map("n", "<leader>rs", function()
+  reverse_cmd("reverse-step", function() require("dap").step_back() end)
+end, { desc = "rr reverse-step" })
 
 -- Step backwards one line, stepping OVER function calls (mirrors <F10>)
-map("n", "<leader>rN", function() gdb_console("reverse-next") end, { desc = "rr reverse-next" })
+-- Note: cpptools has no DAP reverse-next; step_back (reverse-step) is used as fallback.
+map("n", "<leader>rN", function()
+  reverse_cmd("reverse-next", function() require("dap").step_back() end)
+end, { desc = "rr reverse-next" })
