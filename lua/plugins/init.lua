@@ -118,33 +118,33 @@ return {
   },
 
   -- github copilot
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = {
-          auto_trigger = false,  -- disable auto trigger by default
-        },
-        keymaps = {
-          accept = "<M-l>",
-          next = "<M-]>",
-          prev = "<M-[>",
-          dismiss = "<C-]>",
-        },
-      })
-    end,
-  },
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    dependencies = {
-      { "zbirenbaum/copilot.lua" },
-      { "nvim-lua/plenary.nvim" }
-    },
-    opts = {},
-    event = "VeryLazy",
-  },
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   cmd = "Copilot",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("copilot").setup({
+  --       suggestion = {
+  --         auto_trigger = false,  -- disable auto trigger by default
+  --       },
+  --       keymaps = {
+  --         accept = "<M-l>",
+  --         next = "<M-]>",
+  --         prev = "<M-[>",
+  --         dismiss = "<C-]>",
+  --       },
+  --     })
+  --   end,
+  -- },
+  -- {
+  --   "CopilotC-Nvim/CopilotChat.nvim",
+  --   dependencies = {
+  --     { "zbirenbaum/copilot.lua" },
+  --     { "nvim-lua/plenary.nvim" }
+  --   },
+  --   opts = {},
+  --   event = "VeryLazy",
+  -- },
 
   -- claude code
   -- {
