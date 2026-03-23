@@ -8,6 +8,8 @@ local nomap = vim.keymap.del
 nomap("n", "<S-tab>")
 nomap("n", "<tab>")
 nomap("n", "<leader>n")
+-- conflicts with <leader>bt <leader>bb ...
+nomap("n", "<leader>b")
 
 -- add yours here
 
@@ -207,6 +209,8 @@ map("n", "<leader>dn", function() require("dap").step_over()     end, { desc = "
 map("n", "<leader>di", function() require("dap").step_into()     end, { desc = "DAP step into" })
 map("n", "<leader>do", function() require("dap").step_out()      end, { desc = "DAP step out" })
 map("n", "<leader>dq", function() require("dap").terminate()     end, { desc = "DAP terminate session" })
+map("n", "<leader>dj", function() require("dap").down()     end, { desc = "DAP down" })
+map("n", "<leader>dk", function() require("dap").up()     end, { desc = "DAP up" })
 
 -- Jump to the line where execution is currently paused, then center the view
 map("n", "<leader>R", function() require("dap").run_to_cursor() end, { desc = "DAP run to cursor" })
@@ -238,6 +242,10 @@ end, { desc = "DAP toggle UI" })
 map("n", "<leader>bt", function()
   require("telescope").extensions.dap.frames()
 end, { desc = "DAP backtrace (Telescope)" })
+
+map("n", "<leader>dv", function()
+  require("telescope").extensions.dap.variables()
+end, { desc = "DAP variables (Telescope)" })
 
 -- All breakpoints across every file
 map("n", "<leader>bl", function()
@@ -313,3 +321,34 @@ end, { desc = "rr reverse-step" })
 map("n", "<leader>rN", function()
   reverse_cmd("reverse-next", function() require("dap").step_back() end)
 end, { desc = "rr reverse-next" })
+
+local function set_debug_keymaps()
+  map("n", "<Down>", function() require("dap").step_over()  end, { desc = "DAP step over" })
+  map("n", "<Right>", function() require("dap").step_into()  end, { desc = "DAP step into" })
+  map("n", "<Up>", function()
+    reverse_cmd("reverse-next", function() require("dap").step_back() end)
+  end, { desc = "rr reverse-next" })
+  map("n", "<Left>", function()
+    reverse_cmd("reverse-step", function() require("dap").step_back() end)
+  end, { desc = "rr reverse-step" })
+end
+
+local function restore_keymaps()
+  local keys = { "<Up>", "<Down>", "<Left>", "<Right>" }
+  for _, key in ipairs(keys) do
+    -- 使用 pcall 包装删除操作，即使映射不存在也不会报错
+    pcall(vim.keymap.del, "n", key)
+  end
+end
+
+require("dap").listeners.after.event_initialized["toggle_debug_keys"] = function()
+  set_debug_keymaps()
+end
+
+require("dap").listeners.before.event_terminated["toggle_debug_keys"] = function()
+  restore_keymaps()
+end
+
+require("dap").listeners.before.event_exited["toggle_debug_keys"] = function()
+  restore_keymaps()
+end
